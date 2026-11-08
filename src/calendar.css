@@ -684,3 +684,8 @@
 .ixc[dir="rtl"] .ixc-tl-group { left: auto; right: 0; }
 .ixc[dir="rtl"] .ixc-tl-group span { left: auto; right: 14px; }
 .ixc[dir="rtl"] .ixc-tl-group em { right: auto; left: 14px; }
+
+/* not enough room for every view button (many views or a narrow container) */
+.ixc.ixc-tight .ixc-seg { display: none; }
+.ixc.ixc-tight .ixc-viewsel { display: inline-flex; }
+.ixc.ixc-tight .ixc-viewsel[hidden] { display: none; }

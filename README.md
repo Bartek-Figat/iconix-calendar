@@ -4,6 +4,9 @@ A keyboard-first event calendar for React, Vue and the web, from the makers of [
 
 **[Live demo and docs →](https://bartek-figat.github.io/iconix-calendar/)** · [82 examples](https://bartek-figat.github.io/iconix-calendar/site/docs.html#ex-basic) · [npm](https://www.npmjs.com/package/@iconix/calendar)
 
+
+[![Week view with the sidebar: quick add, mini month and calendar filters](https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/week.png)](https://bartek-figat.github.io/iconix-calendar/site/#demo)
+
 - **13 views:** day, week, N days, resources as columns, month, week grid, multi-month, year heat map, agenda, list week / month / year and a resource timeline (day, week or month)
 - **Event sources:** arrays, functions called per visible range, JSON feed URLs and `.ics` feeds, with lazy loading, a loading bar and `refetchEvents()`
 - **Full repeat rules:** “2nd Tuesday”, “last Friday”, day 1 and 15, every N weeks, hourly, yearly in chosen months; all round-trip through `.ics`
@@ -20,6 +23,23 @@ A keyboard-first event calendar for React, Vue and the web, from the makers of [
 ```bash
 npm i @iconix/calendar
 ```
+
+## Screenshots
+
+[![Command palette turning a sentence into an event](https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/palette.png)](https://bartek-figat.github.io/iconix-calendar/site/#demo)
+
+<table>
+  <tr>
+    <td width="50%"><b>Resource timeline with columns, dark</b><br><img src="https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/timeline-dark.png" alt="Workshop bays timeline with Bay and Kind columns in the dark theme"></td>
+    <td width="50%"><b>Grape preset, solid events, dark</b><br><img src="https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/styles-dark.png" alt="Week view with the grape preset and solid event style"></td>
+  </tr>
+  <tr>
+    <td width="62%"><b>Docs: 82 live examples with typo-tolerant search</b><br><img src="https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/docs.png" alt="Docs page with the sidebar search showing results for a typo"></td>
+    <td width="38%"><b>On a phone</b><br><img src="https://raw.githubusercontent.com/Bartek-Figat/iconix-calendar/main/docs/screenshots/phone.png" alt="Three-day view on a phone"></td>
+  </tr>
+</table>
+
+Screenshots are generated from the site with `npm run screenshots`.
 
 ## React
 

@@ -747,7 +747,12 @@ export class Calendar {
   }
   _renderBar() {
     const v = this._view(), t = this.t;
-    this.compact = (this.root.clientWidth || 1200) < 1100;
+    // the view switcher needs room for every button; when it would squeeze the title, use the dropdown
+    const width = this.root.clientWidth || 1200;
+    const nViews = this.o.views.filter((k) => VIEWS[k]).length;
+    const tight = width < 640 + nViews * 78;
+    this.root.classList.toggle('ixc-tight', tight);
+    this.compact = tight || width < 1100;
     this.bar.querySelector('.ixc-title').textContent = v.title(this);
     this.bar.querySelector('.ixc-zoom').hidden = !v.zoomable;
     const seg = this.bar.querySelector('.ixc-seg');

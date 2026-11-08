@@ -47,7 +47,8 @@
   "scripts": {
     "dev": "node server.mjs",
     "test": "node --test --test-force-exit",
-    "test:coverage": "node --test --test-force-exit --experimental-test-coverage --test-coverage-exclude=test/** --test-coverage-exclude=node_modules/**"
+    "test:coverage": "node --test --test-force-exit --experimental-test-coverage --test-coverage-exclude=test/** --test-coverage-exclude=node_modules/**",
+    "screenshots": "node scripts/screenshots.mjs"
   },
   "keywords": [
     "calendar",
