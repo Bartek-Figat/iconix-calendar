@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Style review</title>
+  <script type="importmap">{ "imports": { "@iconix/icons/lite": "https://cdn.jsdelivr.net/npm/@iconix/icons@1.1.1/dist/lite.js", "@iconix/search/engine": "https://cdn.jsdelivr.net/npm/@iconix/search@0.2.0/src/engine.js" } }</script>
+  <link rel="stylesheet" href="../src/calendar.css">
+  <style>
+    body { margin: 0; padding: 16px; font-family: system-ui, sans-serif; background: #f4f4f5; }
+    .grid { display: grid; grid-template-columns: repeat(var(--cols, 2), 1fr); gap: 16px; }
+    .cell h4 { margin: 0 0 6px; font: 600 13px ui-monospace, monospace; }
+    .cell > div { height: var(--h, 520px); }
+  </style>
+</head>
+<body>
+  <div class="grid" id="grid"></div>
+  <script type="module">
+    // Dev-only page: renders preset/style combos side by side for visual review.
+    // Usage: review.html?c=paper:minimal,ocean:glass&view=week&theme=light&cols=2&h=520
+    import { createCalendar } from '../src/index.js';
+    import { calendars, resources, demoEvents, demoWeek } from './demo-data.js';
+    const q = new URLSearchParams(location.search);
+    const combos = (q.get('c') || 'zinc:soft').split(',');
+    const grid = document.getElementById('grid');
+    grid.style.setProperty('--cols', q.get('cols') || 2);
+    grid.style.setProperty('--h', `${q.get('h') || 520}px`);
+    for (const c of combos) {
+      const [preset, eventStyle, theme] = c.split(':');
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.innerHTML = `<h4>${c}</h4><div></div>`;
+      grid.appendChild(cell);
+      const extra = q.get('o') ? JSON.parse(q.get('o')) : {};
+      const w = demoWeek();
+      const at = (d, h, m = 0) => new Date(w.getFullYear(), w.getMonth(), w.getDate() + d, h, m);
+      const bg = q.get('bg') ? [
+        { id: 'bg1', title: 'Office closed', start: at(4, 13), end: at(4, 18), display: 'background', color: '#dc2626' },
+        { id: 'bg2', title: 'Maintenance', start: at(1, 7), end: at(1, 10), display: 'background', color: '#ca8a04', resourceId: 'nova' },
+      ] : [];
+      const cal = createCalendar(cell.lastElementChild, {
+        view: q.get('view') || 'week', date: w, events: [...demoEvents(), ...bg], calendars, resources,
+        sidebar: q.get('sidebar') === '1', preset, eventStyle, theme: theme || q.get('theme') || 'light', locale: 'en-GB', scrollTime: 9,
+        ...extra,
+      });
+      if (q.get('sel')) cal.selectRange({ start: at(2, 14), end: at(2, 16) });
+    }
+  </script>
+</body>
+</html>

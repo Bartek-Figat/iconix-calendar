@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Iconix Calendar – event calendar for React, Vue and the web</title>
+  <meta name="description" content="A keyboard-first event calendar with search by @iconix/search: 13 views, event sources, drag and drop, background events, natural-language quick add, command palette, undo/redo, recurring events, a resource timeline and .ics import/export. Icons by @iconix/icons, MIT.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%2318181b'/%3E%3Cg fill='none' stroke='%23fafafa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' transform='translate(4 4)'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/g%3E%3C/svg%3E">
+  <script>
+    try { const t = localStorage.getItem('ixc-site-theme'); if (t) document.documentElement.dataset.theme = t; else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark'; } catch (e) {}
+  </script>
+  <!-- The calendar draws all of its icons with @iconix/icons -->
+  <script type="importmap">{ "imports": { "@iconix/icons/lite": "https://cdn.jsdelivr.net/npm/@iconix/icons@1.1.1/dist/lite.js", "@iconix/search/engine": "https://cdn.jsdelivr.net/npm/@iconix/search@0.2.0/src/engine.js" } }</script>
+  <link rel="stylesheet" href="../src/calendar.css">
+  <link rel="stylesheet" href="./site.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-in">
+      <a class="brand" href="#" aria-label="iconix calendar home">
+        <span class="brand-mark"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="iconix iconix-calendar-days" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg></span>
+        <b>iconix</b><span class="brand-tag">calendar</span>
+      </a>
+      <nav class="nav">
+        <a href="#demo">Demo</a><a href="#styles">Styles</a><a href="#examples">Examples</a><a href="./docs.html">Docs</a><a href="#tools">Tools</a><a href="#usage">Usage</a><a href="#cli">CLI</a><a href="#where">Where it works</a><a href="#options">Options</a>
+      </nav>
+      <div class="top-r">
+        <a class="pill coffee" href="https://buymeacoffee.com/bartek1983d" target="_blank" rel="noopener"><span data-i="coffee"></span><span class="hide-sm">Buy me a coffee</span></a>
+        <a class="pill" href="https://www.npmjs.com/package/@iconix/calendar" target="_blank" rel="noopener"><span data-i="box"></span>npm</a>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode"><span data-i="moon"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero dots">
+      <div class="wrap center">
+        <p class="meta">@iconix/calendar · v0.1.0 · MIT</p>
+        <h1>One calendar<br>for React,<br>Vue &amp; the web.</h1>
+        <p class="lead">Drag, type or press a key and the event lands where you meant it. Thirteen views, a command palette, natural-language quick add, undo, recurring events and a resource timeline. Every icon comes from <a class="ul" href="https://bartek-figat.github.io/iconix-site/">@iconix/icons</a>, search is powered by <a class="ul" href="https://bartek-figat.github.io/iconix-search/">@iconix/search</a>, and there is no paid tier.</p>
+        <div class="cta">
+          <a class="btn btn-dark" href="#demo">Try the demo <span data-i="arrow"></span></a>
+          <a class="btn" href="./docs.html">Read the docs</a>
+        </div>
+        <div class="code-card install">
+          <div class="code-h"><span>Install</span><button class="copy" data-copy="npm i @iconix/calendar"><span data-i="copy"></span>Copy</button></div>
+          <pre><code><span class="tk-k">npm</span> i @iconix/calendar</code></pre>
+        </div>
+        <div class="stats">
+          <div><b>13</b><span>views</span></div>
+          <div><b>20</b><span>built-in tools</span></div>
+          <div><b>2</b><span>dependencies: @iconix/icons, @iconix/search</span></div>
+          <div><b id="sizeStat">~65 KB</b><span>gzipped, JS + CSS</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="section">
+      <div class="wrap-wide">
+        <div class="sec-head">
+          <p class="eyebrow">Live demo</p>
+          <h2>Go on, break it.</h2>
+          <p class="sub">Everything below is the real component. Drag on the grid to create, drag edges to resize, press <kbd>Ctrl</kbd> <kbd>K</kbd> for commands, or type <em>“Dentist friday 4pm #personal”</em> into the box on the left. <kbd>Ctrl</kbd> <kbd>Z</kbd> undoes anything.</p>
+        </div>
+        <div class="try">
+          <span class="try-l">Try typing:</span>
+          <button data-try="Coffee with Ann tomorrow 9:30 #personal">Coffee with Ann tomorrow 9:30 #personal</button>
+          <button data-try="Standup every weekday 9:00-9:15 #team">Standup every weekday 9-9:15 #team</button>
+          <button data-try="Workshop fri 13-16 @nova">Workshop fri 13-16 @nova</button>
+          <button data-try="Spotkanie jutro o 14 przez 45 min #work">Spotkanie jutro o 14 przez 45 min</button>
+        </div>
+        <div class="demo-frame">
+          <div id="cal"></div>
+        </div>
+        <div class="custom">
+          <div class="ctl"><span class="ctl-l">Accent</span><div class="swatches" id="accentCtl"></div></div>
+          <div class="ctl"><span class="ctl-l">Event style</span><div class="seg" data-opt="eventStyle"><button data-v="soft" class="on">Soft</button><button data-v="solid">Solid</button><button data-v="outline">Outline</button></div></div>
+          <div class="ctl"><span class="ctl-l">Density</span><div class="seg" data-opt="density"><button data-v="compact">Compact</button><button data-v="comfortable" class="on">Comfy</button><button data-v="spacious">Spacious</button></div></div>
+          <div class="ctl"><span class="ctl-l">Language</span><div class="seg" data-opt="locale"><button data-v="en-GB" class="on">EN</button><button data-v="en-US">US</button><button data-v="pl-PL">PL</button></div></div>
+          <div class="ctl"><span class="ctl-l">Week starts</span><div class="seg" data-opt="firstDay"><button data-v="1" class="on">Mon</button><button data-v="0">Sun</button></div></div>
+          <div class="ctl"><span class="ctl-l">Radius</span><input type="range" min="0" max="16" value="10" id="radiusCtl" aria-label="Corner radius"></div>
+          <label class="ctl sw"><input type="checkbox" id="weekendsCtl" checked><span></span>Weekends</label>
+          <label class="ctl sw"><input type="checkbox" id="sidebarCtl" checked><span></span>Sidebar</label>
+        </div>
+        <div class="code-card snippet">
+          <div class="code-h"><span>Your config</span><div class="tabs mini" id="snipTabs"><button data-t="react" class="on">React</button><button data-t="vue">Vue</button><button data-t="js">JavaScript</button></div><button class="copy" id="snipCopy"><span data-i="copy"></span>Copy</button></div>
+          <pre><code id="snipCode"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="styles" class="section alt">
+      <div class="wrap-wide">
+        <div class="sec-head">
+          <p class="eyebrow">Styles</p>
+          <h2>10 presets × 8 event styles</h2>
+          <p class="sub">Pick a preset for the whole calendar and a style for the events. Each preset has a light and a dark variant. The code on the right always matches what you see.</p>
+        </div>
+        <div class="styles">
+          <div class="styles-side">
+            <div class="ctl-l">Preset</div>
+            <div class="presets" id="presetGrid"></div>
+            <div class="ctl-l">Event style</div>
+            <div class="evstyles" id="evStyleGrid"></div>
+            <div class="ctl-l">Mode</div>
+            <div class="seg" id="styleMode"><button data-v="light">Light</button><button data-v="dark">Dark</button><button data-v="auto">Auto</button></div>
+          </div>
+          <div class="styles-main">
+            <div class="styles-frame"><div id="styleCal"></div></div>
+            <div class="styles-code">
+              <div class="code-card"><div class="code-h"><span>Options</span><button class="copy" id="styleCopyJs"><span data-i="copy"></span>Copy</button></div><pre><code id="styleJs"></code></pre></div>
+              <div class="code-card"><div class="code-h"><span>CSS tokens</span><button class="copy" id="styleCopyCss"><span data-i="copy"></span>Copy</button></div><pre><code id="styleCss"></code></pre></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples" class="section">
+      <div class="wrap-wide">
+        <div class="sec-head">
+          <p class="eyebrow">Examples</p>
+          <h2>Recipes for real apps</h2>
+          <p class="sub">A selection of live examples: resources, drag rules, custom rendering, hooks, styling every part and driving the calendar from code. <a class="ul" href="./docs.html#ex-basic">All <span id="exCount">59</span> examples, with search, are in the docs →</a></p>
+        </div>
+        <div class="ex">
+          <nav class="ex-list" id="exList" aria-label="Examples"></nav>
+          <div class="ex-main">
+            <div class="ex-head"><h3 id="exTitle"></h3><p id="exDesc"></p></div>
+            <div class="ex-actions" id="exActions" hidden></div>
+            <div class="ex-frame"><div id="exCal"></div></div>
+            <style id="exStyle"></style>
+            <div class="ex-log" id="exLog" hidden></div>
+            <div class="code-card"><div class="code-h"><span>JavaScript · the same options work as React / Vue props</span><button class="copy" id="exCopy"><span data-i="copy"></span>Copy</button></div><pre><code id="exCode"></code></pre></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tools" class="section alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow">Tools</p>
+          <h2>Twenty tools, zero plugins</h2>
+          <p class="sub">The things people usually wire up themselves come in the box and work in every view.</p>
+        </div>
+        <div class="tools" id="toolsGrid"></div>
+      </div>
+    </section>
+
+    <section id="usage" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow">Usage</p>
+          <h2>Use it in your stack</h2>
+          <p class="sub">Install the package once, import the stylesheet once, then pick the way that fits your project.</p>
+        </div>
+        <ol class="steps">
+          <li>
+            <div class="step-h"><span class="num">1</span><h3>Install</h3></div>
+            <div class="code-card">
+              <div class="code-h"><span>Terminal</span><button class="copy" data-copy="npm i @iconix/calendar"><span data-i="copy"></span>Copy</button></div>
+              <pre><code><span class="tk-k">npm</span> i @iconix/calendar
+<span class="tk-c"># or: pnpm add @iconix/calendar · yarn add @iconix/calendar · bun add @iconix/calendar</span></code></pre>
+            </div>
+            <p class="note">Windows PowerShell shows “running scripts is disabled”? Run <code>npm.cmd i @iconix/calendar</code> instead.</p>
+          </li>
+          <li>
+            <div class="step-h"><span class="num">2</span><h3>Render a calendar</h3></div>
+            <div class="tabs" id="usageTabs"></div>
+            <p class="tab-note" id="usageNote"></p>
+            <div class="code-card">
+              <div class="code-h"><span id="usageLang"></span><button class="copy" id="usageCopy"><span data-i="copy"></span>Copy</button></div>
+              <pre><code id="usageCode"></code></pre>
+            </div>
+          </li>
+          <li>
+            <div class="step-h"><span class="num">3</span><h3>Save changes</h3></div>
+            <p class="note big">Every drag, edit, paste and undo fires <code>onChange</code> with the full event list, plus fine-grained <code>onEventCreate</code>, <code>onEventUpdate</code> and <code>onEventDelete</code>. Dates are plain <code>Date</code> objects; all-day events use an exclusive <code>end</code>, like iCalendar.</p>
+            <div class="code-card">
+              <div class="code-h"><span>Persist</span></div>
+              <pre><code id="persistCode"></code></pre>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="cli" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow">CLI</p>
+          <h2>Calendar tools in your terminal</h2>
+          <p class="sub">The package installs an <code>iconix-calendar</code> command. It reads <code>.json</code> and <code>.ics</code> files, so you can convert exports, check data in CI or find a free slot from a script. Add <code>--json</code> for machine-readable output.</p>
+        </div>
+        <div class="code-card">
+          <div class="code-h"><span>Terminal</span><button class="copy" data-copy="npx iconix-calendar --help"><span data-i="copy"></span>Copy</button></div>
+          <pre><code id="cliDemo"></code></pre>
+        </div>
+        <div class="table-wrap" style="margin-top:16px"><table class="opts" id="cliTable"><thead><tr><th>Command</th><th>What it does</th></tr></thead><tbody></tbody></table></div>
+        <p class="note">Exit codes: <code>0</code> ok, <code>1</code> the check found something (a clash, invalid data, no free slot), <code>2</code> usage error. Handy for CI.</p>
+      </div>
+    </section>
+
+    <section id="where" class="section alt">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow">Compatibility</p>
+          <h2>Where can I use it?</h2>
+          <p class="sub">The core is plain ES modules with TypeScript types. Its two runtime dependencies are siblings from the same family: @iconix/icons draws every icon and @iconix/search powers event search (typos, word forms, field queries). React and Vue are optional peer dependencies, used only by their wrappers.</p>
+        </div>
+        <div class="where" id="whereGrid"></div>
+      </div>
+    </section>
+
+    <section id="options" class="section">
+      <div class="wrap">
+        <div class="sec-head">
+          <p class="eyebrow">Customization</p>
+          <h2>All options</h2>
+          <p class="sub">These are props in React, props or <code>:options</code> in Vue, attributes or <code>.options</code> on <code>&lt;ixc-calendar&gt;</code>, and the second argument of <code>createCalendar()</code>.</p>
+        </div>
+        <div class="table-wrap"><table class="opts" id="optsTable"><thead><tr><th>Option</th><th>Default</th><th>What it does</th></tr></thead><tbody></tbody></table></div>
+
+        <div class="sec-head sm">
+          <h3>Methods</h3>
+          <p class="sub">From <code>createCalendar()</code>, a React <code>ref</code>, Vue’s exposed <code>api</code> or <code>element.api</code>.</p>
+        </div>
+        <div class="table-wrap"><table class="opts" id="apiTable"><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody></tbody></table></div>
+
+        <div class="sec-head sm">
+          <h3>Keyboard</h3>
+          <p class="sub">Active while the pointer is over the calendar or focus is inside it. Turn off with <code>keyboard: false</code>.</p>
+        </div>
+        <div class="keys" id="keysGrid"></div>
+
+        <div class="sec-head sm">
+          <h3>Every part can be styled</h3>
+          <p class="sub">Pass your own classes per part with <code>classNames</code> (Tailwind works), or target the built-in <code>ixc-*</code> classes in plain CSS. See the “Style any part” examples above.</p>
+        </div>
+        <div class="table-wrap"><table class="opts" id="partsTable"><thead><tr><th>classNames key</th><th>Built-in class</th><th>What it is</th></tr></thead><tbody></tbody></table></div>
+
+        <div class="sec-head sm">
+          <h3>Theming</h3>
+          <p class="sub">Every color, the radius and the fonts are CSS variables on <code>.ixc</code>. Override them in your own stylesheet.</p>
+        </div>
+        <div class="code-card">
+          <div class="code-h"><span>CSS</span></div>
+          <pre><code id="cssCode"></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="support" class="section alt">
+      <div class="wrap center narrow">
+        <p class="eyebrow">Support Iconix</p>
+        <h2>Free, MIT, and staying that way</h2>
+        <p class="sub">Iconix Calendar is free and MIT licensed, resource timeline included. If it saves you a few days of work, a coffee keeps it going.</p>
+        <div class="cta">
+          <a class="btn btn-coffee" href="https://buymeacoffee.com/bartek1983d" target="_blank" rel="noopener"><span data-i="coffee"></span>Buy me a coffee</a>
+          <a class="btn" href="https://bartek-figat.github.io/iconix-site/" target="_blank" rel="noopener"><span data-i="sparkles"></span>Need icons? @iconix/icons</a>
+          <a class="btn" href="https://bartek-figat.github.io/iconix-search/" target="_blank" rel="noopener"><span data-i="search"></span>Need search? @iconix/search</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-in">
+      <span>iconix calendar · 13 views · MIT License</span>
+      <span class="foot-links"><a href="https://bartek-figat.github.io/iconix-site/">@iconix/icons</a><a href="https://bartek-figat.github.io/iconix-search/">@iconix/search</a><a href="https://buymeacoffee.com/bartek1983d">Buy me a coffee</a><a href="https://www.npmjs.com/package/@iconix/calendar">npmjs.com/package/@iconix/calendar</a></span>
+    </div>
+  </footer>
+
+  <script type="module" src="./site.js"></script>
+  <script type="module" src="./gallery.js"></script>
+</body>
+</html>
